@@ -1,8 +1,5 @@
 name: Deploy Lambda
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 on:
   push:
     branches:
@@ -50,3 +47,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
