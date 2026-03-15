@@ -1,5 +1,7 @@
+packages:
+  - .
 allowBuilds:
-  '@parcel/watcher': true
+  "@parcel/watcher": true
   aws-sdk: false
   es5-ext: true
   esbuild: true
