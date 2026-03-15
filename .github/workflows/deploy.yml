@@ -1,10 +1,13 @@
 name: Deploy Lambda
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
-      - main     # deploy produção
-      - develop  # deploy dev
+      - main
+      - develop
 
 jobs:
   deploy:
@@ -13,16 +16,8 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Cache PNPM store
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
       - name: Instalar PNPM
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: 8
 
@@ -39,7 +34,8 @@ jobs:
         run: zip -r function.zip dist node_modules
 
       - name: Deploy Lambda
-        run: aws lambda update-function-code \
+        run: | 
+            aws lambda update-function-code \
             --function-name aws-lambda-queue-consumer \
             --zip-file fileb://function.zip \
             --region us-east-1
@@ -47,5 +43,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
