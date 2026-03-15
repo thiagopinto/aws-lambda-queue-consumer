@@ -24,6 +24,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Remover node_modules
+        run: rm -rf node_modules && pnpm install --prod
+
       - name: Empacotar Lambda
         run: zip -r function.zip dist node_modules
 

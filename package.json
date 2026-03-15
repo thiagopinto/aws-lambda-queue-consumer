@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "bash ./scripts/deploy.sh",
-    "deploy:init": "bash ./scripts/deploy-initial.sh"
+    "deploy": "bash scripts/deploy-update.sh",
+    "deploy:init": "bash scripts/deploy-initial.sh"
   },
   "keywords": [],
   "author": "",
