@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "pnpm build && sls deploy",
-    "remove": "sls remove"
+    "deploy": "bash ./scripts/deploy.sh",
+    "deploy:init": "bash ./scripts/deploy-initial.sh"
   },
   "keywords": [],
   "author": "",
