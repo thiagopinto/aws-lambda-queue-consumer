@@ -1,0 +1,30 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Instalar PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Instalar dependências
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Deploy Serverless
+        run: pnpm sls deploy --stage dev
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
