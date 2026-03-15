@@ -1,0 +1,28 @@
+{
+  "name": "aws-lambda-queue-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "pnpm build && sls deploy",
+    "remove": "sls remove"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.32.1",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.161",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1693.0",
+    "eslint": "^10.0.3",
+    "serverless-esbuild": "^1.57.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
