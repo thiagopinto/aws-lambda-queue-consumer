@@ -6,8 +6,8 @@ env:
 on:
   push:
     branches:
-      - main # deploy produção
-      - develop # deploy dev
+      - main     # deploy produção
+      - develop  # deploy dev
 
 jobs:
   deploy:
@@ -16,8 +16,16 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
+      - name: Cache PNPM store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Instalar PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8
 
@@ -27,7 +35,7 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Remover node_modules
+      - name: Remover node_modules e instalar apenas produção
         run: rm -rf node_modules && pnpm install --prod
 
       - name: Empacotar Lambda
@@ -36,7 +44,8 @@ jobs:
       - name: Deploy Lambda
         run: aws lambda update-function-code \
             --function-name aws-lambda-queue-consumer \
-            --zip-file fileb://function.zip
+            --zip-file fileb://function.zip \
+            --region us-east-1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
