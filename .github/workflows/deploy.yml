@@ -16,6 +16,8 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
+      - name: Instalar Serverless Framework
+        run: pnpm add -g serverless
 
       - name: Instalar dependências
         run: pnpm install
